@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+
+    <style>
+        *,
+        *:after,
+        *:before {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            border: 0;
+        }
+
+        header {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0px 0px 5px lightgray;
+        }
+
+        header * {
+            display: inline;
+        }
+
+        header h1 {
+            margin-left: 2%;
+        }
+
+        header li {
+            margin: 20px;
+        }
+
+        .nav_links {
+            text-decoration: none;
+            color: black;
+            height: 100%;
+            font-size: 1.2em;
+        }
+
+        li a:hover {
+            color: gray;
+        }
+
+        .main {
+            width: 500px;
+            margin: 3% auto;
+        }
+
+        form {
+            margin: 4% 0%;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input {
+            padding: 8px;
+            width: 70%;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 0px 3px gray;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 10px;
+            width: 100px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        .item_container {
+            padding: 0px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .item_container p {
+            font-size: 1.1rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1><a href="#" class="nav_links">TodoApp</a></h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav_links">Home</a></li>
+                <li><a href="#" class="nav_links">About</a></li>
+                <li><a href="#" class="nav_links">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main">
+        <form action="{% url 'addTodo'%}" method="post">
+            {% csrf_token %}
+            <input type="text" name="task" />
+            <button type="submit">Add</button>
+        </form>
+
+        <div>
+            {% if list %}
+                {% for item in list %}
+                    <div class="item_container">
+                        <p>{{ item.item }}</p>
+                        <p style="font-size: 0.7rem;"><a class="nav_links" href="{% url 'delTodo' item.id %}">&#x2715</a></p>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                    <p>No Todo Available here, add some please!!!</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+</html>
